@@ -40,18 +40,24 @@ public class GalleryInformation implements Serializable {
 	public void setGallery_title(String gallery_title) {
 		this.gallery_title = gallery_title;
 	}
+	@Basic
+	@Column(name = "gallery_desc")
 	public String getGallery_desc() {
 		return gallery_desc;
 	}
 	public void setGallery_desc(String gallery_desc) {
 		this.gallery_desc = gallery_desc;
 	}
+	@Basic
+	@Column(name = "gallery_photo")
 	public String getGallery_photo() {
 		return gallery_photo;
 	}
 	public void setGallery_photo(String gallery_photo) {
 		this.gallery_photo = gallery_photo;
 	}
+	@Basic
+	@Column(name = "gallery_date")
 	public String getGallery_date() {
 		return gallery_date;
 	}

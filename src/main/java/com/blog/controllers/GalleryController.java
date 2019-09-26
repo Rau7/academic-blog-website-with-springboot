@@ -21,7 +21,7 @@ public class GalleryController {
 	@RequestMapping(value = "/gallery", method = RequestMethod.GET)
 	public String index(Model model) {
 		List<GalleryInformation> galleryInformation = galleryService.getGalleryInformationList();
-		model.addAttribute("gallery", galleryInformation);
+		model.addAttribute("gallerys", galleryInformation);
 		return "gallery";
 	}
 	

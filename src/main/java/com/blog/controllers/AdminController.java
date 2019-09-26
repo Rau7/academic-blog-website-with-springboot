@@ -42,7 +42,8 @@ import com.blog.services.BooksInformationService;
 import com.blog.models.WpaperInformation;
 import com.blog.services.WpapersInformationService;
 
-
+import com.blog.models.GalleryInformation;
+import com.blog.services.GalleryInformationService;
 
 
 @Controller
@@ -66,6 +67,9 @@ public class AdminController {
 	@Autowired
 	private WpapersInformationService wpaperService;
 	
+	@Autowired
+	private GalleryInformationService galleryService;
+	
 	public static String uploadDirectory = System.getProperty("user.dir")+"/src/main/resources/static/uploads";
 	
 	
@@ -85,7 +89,7 @@ public class AdminController {
 		model.addAttribute("dash", dashboard);
 		return  "dashboard_sett";
 	}
-	
+		
 	@RequestMapping(value = "/admin/dashboard_sett", method = RequestMethod.POST)
 	public String editDashboardPost(DashboardInformation dcoming , @RequestParam("slider") MultipartFile[] file1, @RequestParam("dashboard2") MultipartFile[] file2 , @RequestParam("dashboard3") MultipartFile[] file3) {
 	 	DashboardInformation dash = dashService.getDashboard(1);
@@ -732,5 +736,98 @@ public class AdminController {
         
         return "redirect:/admin/wpaper_list";
     }
+    
+    @RequestMapping(value="/admin/gallery_list", method=RequestMethod.GET)
+    public String listGallery(Model model) {
+        List<GalleryInformation> gallerys = galleryService.getGalleryInformationList(); 
+        model.addAttribute("gallerys", gallerys);
+        return  "gallery_list";
+    }
+    
+    @RequestMapping(value="/admin/editgallerry/{gallery_id}", method=RequestMethod.GET)
+    public String editGalleryG(Model model,@PathVariable("gallery_id") Integer id) {
+        GalleryInformation gallery = galleryService.getGallery(id);
+        model.addAttribute("gallery", gallery);
+        return  "gallery_detail";
+    }
+    
+    @RequestMapping(value = "/admin/editinggallery/{gallery_id}", method = RequestMethod.POST)
+    public String editGalleryP(@PathVariable("gallery_id") Integer id, GalleryInformation gallerycome , @RequestParam("photo") MultipartFile[] file1) {
+        GalleryInformation gallerygo = galleryService.getGallery(id);
+        
+        String [] filenames = new String[1];
+
+        for (MultipartFile file : file1) {
+          Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+               filenames[0]=file.getOriginalFilename();
+              try {
+                Files.write(fileNameAndPath, file.getBytes());
+              } catch (IOException e) {
+               e.printStackTrace();
+            }
+          }
+         
+            gallerygo.setGallery_title(gallerycome.getGallery_title());
+            gallerygo.setGallery_desc(gallerycome.getGallery_desc());
+            gallerygo.setGallery_photo(filenames[0]);
+            
+            Date date = Calendar.getInstance().getTime();  
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+            String strDate = dateFormat.format(date);  
+            
+            gallerygo.setGallery_date(strDate); 
+        
+        
+        galleryService.updateGallery(gallerygo);
+        
+        return "redirect:/admin/gallery_list";
+    }
+    
+    @RequestMapping(value = "/admin/gallery_delete/{gallery_id}", method = RequestMethod.GET)
+    public String deleteGallery(@PathVariable("gallery_id") Integer id) {
+        GalleryInformation gallery=galleryService.getGallery(id);
+        galleryService.deleteGallery(gallery);
+        return "redirect:/admin/gallery_list";
+    }
+    
+    @RequestMapping(value = "/admin/add_gallery", method = RequestMethod.GET)
+    public String galleryAddG(Model model) {
+        model.addAttribute("galleryInformation", new GalleryInformation());
+        return "gallery_add";
+    }
+    
+    
+    @RequestMapping(value = "/admin/add_gallery", method = RequestMethod.POST)
+    public String galleryAddP(HttpServletRequest request, @ModelAttribute("GalleryInformation") GalleryInformation newGallery, BindingResult result, @RequestParam("photo") MultipartFile[] file1) {
+        GalleryInformation gallery = new GalleryInformation();
+        
+          String [] filenames = new String[1];
+
+        for (MultipartFile file : file1) {
+            Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+                 filenames[0]=file.getOriginalFilename();
+                 try {
+                   Files.write(fileNameAndPath, file.getBytes());
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+              }
+            
+            gallery.setGallery_title(newGallery.getGallery_title());
+            gallery.setGallery_desc(newGallery.getGallery_desc());
+            gallery.setGallery_photo(filenames[0]);
+            
+            Date date = Calendar.getInstance().getTime();  
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+            String strDate = dateFormat.format(date);  
+            
+            gallery.setGallery_date(strDate);
+        
+
+        galleryService.save(gallery);
+        
+        return "redirect:/admin/gallery_list";
+    }
+
 
 }
