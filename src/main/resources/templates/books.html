@@ -1,0 +1,69 @@
+<div th:insert="/header"></div>	
+<body>
+	<!-- home -->
+	<div id="home">
+		<!-- banner -->
+		<div class="banner_w3lspvt-2" th:style="'background: url(/uploads/bookwall.jpg);'">
+			<!-- nav -->
+			<div class="nav_w3ls pt-4 pb-3 text-center">
+				<nav>
+					<label for="drop" class="toggle">Menu</label>
+					<input type="checkbox" id="drop" />
+					<ul class="menu">
+						<li><a th:href="@{/dashboard}" style="color: white;">ANASAYFA</a></li>
+						<li><a th:href="@{/about}" style="color: white;">HAKKIMDA</a></li>
+						<li><a th:href="@{/articles}" style="color: white;">ARTICLES</a></li>
+						<li><a th:href="@{/books}" style="color: white;" class="active">BOOKS</a></li>
+						<li><a th:href="@{/wpapers}" style="color: white;">W-PAPER</a></li>
+						<li><a th:href="@{/posts}" style="color: white;">BLOG</a></li>
+						<li><a href="contact.html" style="color: white;">GALERÝ</a></li>
+						<li><a href="contact.html" style="color: white;">ÝLETÝÞÝM</a></li>
+					</ul>
+				</nav>
+			</div>
+			<!-- //nav -->
+			<div class="banner-text-2 text-right" >
+				<div class="banner-bot-2">
+					<h1 style="color: white;">Kitaplar</h1>
+				</div>
+			</div>
+		</div>
+		<!-- //banner -->
+	</div>
+	<!-- //home -->
+
+	<!-- single -->
+	<div class="blog-w3l py-5" style="padding-top: 0rem!important;">
+		<div class="container py-xl-5 py-lg-3">
+			
+			<div class="blog_section px-lg-5">
+				<section class="news py-5" id="blog">
+				<div class="container py-xl-5 py-lg-5">
+					<div class="row news-grids text-center">
+					
+						<div class="col-md-4 newsgrid" th:each="book : ${books}">
+							<a href="single.html">
+								<img th:src="'/uploads/' + ${book.book_photo}" alt="news image" class="img-fluid">
+							</a>
+							<h4 class="mt-5" th:text="${book.book_title}"></h4>
+							<p class="my-4" th:utext="${book.book_short_wr}"></p>
+							<a class="btn button-style-4 mt-4" th:href="@{'/book_detail/' +${book.book_id}}">Daha Fazlasi</a>
+						</div>
+						
+					</div>
+				</div>
+			</section>
+			</div>
+		</div>
+	</div>
+	<!-- //single -->
+
+	<!-- middle section -->
+	<section class="w3ls-middle py-5 text-center" id="some" th:style="'background: url(/uploads/bookwall.jpg) no-repeat center fixed; height: 396px!important;'">
+		<div class="container py-xl-5 my-lg-5">
+			<h3 class="w3pvt-web-title mb-4">Kitaplar</h3>
+		</div>
+	</section>
+	<!-- //middle section -->
+
+<div th:insert="/footer"></div>

@@ -1,0 +1,60 @@
+<div th:insert="/header"></div>	
+<body>
+	<!-- home -->
+	<div id="home">
+		<!-- banner -->
+		<div class="banner_w3lspvt-2" th:style="'background: url(/uploads/postwall.jpg);'">
+			<!-- nav -->
+			<div class="nav_w3ls pt-4 pb-3 text-center">
+				<nav>
+					<label for="drop" class="toggle">Menu</label>
+					<input type="checkbox" id="drop" />
+					<ul class="menu">
+						<li><a th:href="@{/dashboard}" style="color: white;">ANASAYFA</a></li>
+						<li><a th:href="@{/about}" style="color: white;">HAKKIMDA</a></li>
+						<li><a th:href="@{/articles}" style="color: white;">ARTICLES</a></li>
+						<li><a th:href="@{/books}" style="color: white;">BOOKS</a></li>
+						<li><a th:href="@{/wpapers}" style="color: white;">W-PAPER</a></li>
+						<li><a th:href="@{/posts}" style="color: white;" class="active">BLOG</a></li>
+						<li><a href="contact.html" style="color: white;">GALERÝ</a></li>
+						<li><a href="contact.html" style="color: white;">ÝLETÝÞÝM</a></li>
+					</ul>
+				</nav>
+			</div>
+			<!-- //nav -->
+			<div class="banner-text-2 text-right" >
+				<div class="banner-bot-2">
+					<h1 style="color: white;" th:text="${post.post_title}"></h1>
+				</div>
+			</div>
+		</div>
+		<!-- //banner -->
+	</div>
+	<!-- //home -->
+
+	<!-- single -->
+	<div class="blog-w3l py-5">
+		<div class="container py-xl-5 py-lg-3">
+			<div class="text-center mb-5">
+				<h3 th:text="${post.post_title}"></h3>
+			</div>
+			<div class="blog_section px-lg-5">
+			<div class="card border-0">
+				<img th:src="'/uploads/' + ${post.post_photo}" alt="" class="img-fluid">
+				</div>
+				<p th:utext="${post.post_body}" style="padding-top: 30px;"></p>
+			</div>
+		</div>
+	</div>
+	<!-- //single -->
+
+	<!-- middle section -->
+	<section class="w3ls-middle py-5 text-center" id="some" th:style="'background: url(/uploads/postwall.jpg) no-repeat center fixed; height: 396px!important;'">
+		<div class="container py-xl-5 my-lg-5">
+			<h3 class="w3pvt-web-title mb-4">Bu yayina goz atin!</h3>
+			<a th:href="'/uploads/' + ${post.post_file}" class="btn button-style-2 mt-sm-5 mt-4" download>indir</a>
+		</div>
+	</section>
+	<!-- //middle section -->
+
+<div th:insert="/footer"></div>

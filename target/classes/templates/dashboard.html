@@ -1,0 +1,144 @@
+<div th:insert="/header"></div>	
+<body>
+	<!-- home -->
+	<div id="home">
+		<!-- banner -->
+		<div class="banner_w3lspvt" th:style="'background: url(/uploads/' + ${dashboard.dashboard_photo} + ');'">
+			<!-- nav -->
+			<div class="nav_w3ls pt-4 pb-3 text-center">
+				<nav>
+					<label for="drop" class="toggle">Menu</label>
+					<input type="checkbox" id="drop" />
+					<ul class="menu">
+						<li><a th:href="@{/dashboard}" class="active" style="color: white;">ANASAYFA</a></li>
+						<li><a th:href="@{/about}" style="color: white;">HAKKIMDA</a></li>
+						<li><a th:href="@{/articles}" style="color: white;">ARTICLES</a></li>
+						<li><a th:href="@{/books}" style="color: white;">BOOKS</a></li>
+						<li><a th:href="@{/wpapers}" style="color: white;">W-PAPER</a></li>
+						<li><a th:href="@{/posts}" style="color: white;">BLOG</a></li>
+						<li><a href="contact.html" style="color: white;">GALERİ</a></li>
+						<li><a href="contact.html" style="color: white;">İLETİŞİM</a></li>
+					</ul>
+				</nav>
+			</div>
+			
+			<div class="banner-text text-right">
+				<div class="banner-bot">
+					<h1><a href="index.html" class="logo text-wh">Elif Kelekci</a></h1>
+					<p class="text-bl text-li mt-3 border-bottom pb-4">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+						odit aut fugit.</p>
+					<div class="social-icons mt-4">
+						<ul class="list-unstyled">
+							<li>
+								<a th:href="${about.social_facebook}">
+									<span class="fa fa-facebook"></span>
+								</a>
+							</li>
+							<li>
+								<a href="${about.social_twitter}">
+									<span class="fa fa-twitter"></span>
+								</a>
+							</li>
+							<li>
+								<a href="${about.social_instagram}">
+									<span class="fa fa-instagram"></span>
+								</a>
+							</li>
+							<li>
+								<a href="${about.social_youtube}">
+									<span class="fa fa-youtube-play"></span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<a th:href="@{/about}" class="btn button-style">Hakkimda</a>
+				</div>
+			</div>
+		</div>
+			
+		<!-- //banner -->
+	</div>	
+	<section class="about py-5" id="about">
+		<div class="container pt-xl-5 pt-lg-3">
+			<div class="row about-grids">
+				<div class="col-lg-6 about-left">
+					<img th:src="'/uploads/' + ${about.about_dash_photo}" alt="" class="img-fluid" />
+				</div>
+				<div class="col-lg-6 about-right mt-lg-0 mt-sm-5 mt-4">
+					<h3 class="mb-3 text-bl let">Hakkimda</h3>
+					<p class="mb-3" th:utext="${about.about_desc}"></p>
+					<a th:href="@{/about}" class="btn button-style-3">Daha Fazlasi</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //about -->
+
+	<!-- places -->
+	<section class="trav-grids py-5" id="desti">
+		<div class="container py-xl-5 py-lg-3">
+			<div class="title-bg text-center py-5 mb-5" th:style="'background: url(/uploads/' + ${dashboard.dashboard_photo_2} + ') no-repeat center fixed;'">
+				<h3 class="tittle text-wh let mb-2 pt-lg-3">Yayınlar</h3>
+				<!--<p class="text-li mx-auto pb-lg-3">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
+					quia consequuntur</p>-->
+			</div>
+			<div class="row">
+				<div class="col-lg-6 mt-4" th:each="article : ${articles}">
+					<div class="grids-tem-one">
+						<div class="row">
+							<div class="col-5 grids-img-left">
+								<img th:src="'/uploads/' + ${article.article_photo}" alt="" class="img-fluid">
+							</div>
+							<div class="col-7 right-cont">
+								<h4 class="mb-3 let tm-clr" th:text="${article.article_title}"></h4>
+								<p th:utext="${article.article_short_wr}"></p>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div style="text-align: center;">
+				<a th:href="@{/articles}" class="btn button-style-3">Daha Fazlası</a>
+			</div>
+		</div>
+	</section>
+	<!-- //places -->
+
+	<!-- what -->
+	<div class="serives-w3pvt-mobi bg-li py-5" id="what">
+		<div class="container py-xl-5 py-lg-3">
+			<div class="title-bg text-center py-5 mb-5" th:style="'background: url(/uploads/' + ${dashboard.dashboard_mid_photo} + ') no-repeat center fixed;'" style="width: 75%!important;">
+				<h3 class="tittle text-wh let mb-2 pt-sm-3" th:text="${dashboard.dashboard_writing_1}"></h3>
+			</div>
+		</div>
+	</div>
+	
+	<section class="news py-5" id="blog">
+		<div class="container py-xl-5 py-lg-5">
+			<div class="text-center mb-sm-5 mb-4">
+				<h3 class="tittle text-bl let mb-2 pt-sm-3">Blogum</h3>
+			</div>
+			<div class="row news-grids text-center" >
+				<div class="col-md-4 newsgrid" th:each="post : ${posts}">
+					<a href="single.html">
+						<img th:src="'/uploads/' + ${post.post_photo}" alt="news image" class="img-fluid">
+					</a>
+					<h4 class="mt-5" th:text="${post.post_title}"></h4>
+					<p class="my-4" th:utext="${post.post_short_wr}"></p>
+					<a class="btn button-style-4 mt-4" th:href="@{'/post_detail/' +${post.post_id}}">Daha Fazlası</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //blog -->
+
+	<!-- middle section -->
+	<section class="w3ls-middle py-5 text-center" id="some" th:style="'background: url(/uploads/' + ${about.about_page_p4} + ') no-repeat center fixed;'">
+		<div class="container py-xl-5 my-lg-5">
+			<h3 class="w3pvt-web-title mb-4">Hakkımda</h3>
+			<p class="text-botm-mid">Hakkımda daha fazla detay için butona basın :)</p>
+			<a th:href="@{/about}" class="btn button-style-2 mt-sm-5 mt-4">Daha Fazlası</a>
+		</div>
+	</section>
+	<div th:insert="/footer"></div>
+	
